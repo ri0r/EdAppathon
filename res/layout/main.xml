@@ -3,10 +3,36 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
+    android:weightSum="1">
 <TextView  
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
+<EditText android:layout_width="match_parent" 
+		  android:layout_height="wrap_content" 
+		  android:id="@+id/startLocationEditor" 
+		  android:inputType="textPostalAddress"
+		  android:text="@string/startLocation">
+    <requestFocus></requestFocus>
+</EditText>
+<EditText android:layout_width="match_parent" 
+		  android:layout_height="wrap_content" 
+		  android:id="@+id/endLocationEditor" 
+		  android:inputType="textPostalAddress"
+		  android:text="@string/endLocation">
+    <requestFocus></requestFocus>
+</EditText>
+<Button android:layout_height="wrap_content"
+        android:id="@+id/getRoadsButton" 
+        android:text="@string/getPath" 
+        android:layout_width="match_parent">
+</Button>
+<Button android:layout_height="wrap_content" 
+		android:id="@+id/removeRoadsButton" 
+		android:layout_weight="0.24" 
+		android:layout_width="match_parent"
+		android:text="@string/removeRoads">
+</Button>
+
 </LinearLayout>

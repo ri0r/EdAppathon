@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, EdAppathonActivity!</string>
+    <string name="hello">We Kill The Batman (Team Nine)</string>
     <string name="app_name">EdAppathon</string>
+    <string name="startLocation">Start Location</string>
+    <string name="endLocation">End Location</string>
+    <string name="getPath">Get Roads</string>
+    <string name="removeRoads">Remove Roads</string>
 </resources>
