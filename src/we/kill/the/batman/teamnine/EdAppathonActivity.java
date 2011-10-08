@@ -11,7 +11,7 @@ public class EdAppathonActivity extends Activity {
         super.onCreate(savedInstanceState);
         TextView tv = new TextView(this);
         tv.setText("Hello Austin");
-        setContentView(R.layout.main);
+        setContentView(tv);
     }
     
  
