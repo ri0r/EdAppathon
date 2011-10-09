@@ -17,11 +17,12 @@ public final class R {
         public static final int tabiconlayout=0x7f020003;
     }
     public static final class id {
-        public static final int TextView01=0x7f050004;
-        public static final int endLocationEditor=0x7f050001;
-        public static final int getRoadsButton=0x7f050002;
-        public static final int removeRoadsButton=0x7f050003;
-        public static final int startLocationEditor=0x7f050000;
+        public static final int TextView01=0x7f050005;
+        public static final int again_button=0x7f050000;
+        public static final int endLocationEditor=0x7f050002;
+        public static final int getRoadsButton=0x7f050003;
+        public static final int removeRoadsButton=0x7f050004;
+        public static final int startLocationEditor=0x7f050001;
     }
     public static final class layout {
         public static final int listroutesview=0x7f030000;
