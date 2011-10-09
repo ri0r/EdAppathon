@@ -6,4 +6,8 @@
     <string name="endLocation">End Location</string>
     <string name="getPath">Get Roads</string>
     <string name="removeRoads">Remove Roads</string>
+    <string name="android_sax">Android SAX</string>
+    <string name="sax">Classic SAX</string>
+    <string name="dom">DOM</string>
+    <string name="pull">XML Pull</string>
 </resources>
