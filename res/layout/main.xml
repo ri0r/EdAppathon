@@ -34,5 +34,9 @@
 		android:layout_width="match_parent"
 		android:text="@string/removeRoads">
 </Button>
-
+<ListView android:layout_height="wrap_content" 
+		android:id="@+id/listViewSaveRoads" 
+		android:layout_weight="0.24" 
+		android:layout_width="match_parent"
+</ListView>
 </LinearLayout>
