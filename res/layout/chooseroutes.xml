@@ -28,15 +28,10 @@
         android:text="@string/getPath" 
         android:layout_width="match_parent">
 </Button>
-<Button android:layout_height="wrap_content" 
-		android:id="@+id/removeRoadsButton" 
-		android:layout_weight="0.24" 
-		android:layout_width="match_parent"
-		android:text="@string/removeRoads">
-</Button>
-<ListView android:layout_height="wrap_content" 
-		android:id="@+id/listViewSaveRoads" 
-		android:layout_weight="0.24" 
-		android:layout_width="match_parent">
+<ListView android:layout_height="wrap_content"
+          android:id="@+id/savedRoutesListView"  
+          android:layout_width="match_parent">
 </ListView>
+
+
 </LinearLayout>

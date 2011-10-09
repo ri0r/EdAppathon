@@ -20,7 +20,7 @@ public class TTSService extends Activity implements OnInitListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.chooseroutes);
         // Initialize text-to-speech. This is an asynchronous operation.
         // The OnInitListener (second argument) is called after initialization completes.
         msg = getIntent().getStringExtra("MSG_TO_SAY");
@@ -65,7 +65,6 @@ public class TTSService extends Activity implements OnInitListener{
 		// TODO Auto-generated method stub
 		super.onStop();
 	}
-	@Override
 	public void onInit(int status) {
 		// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
         if (status == TextToSpeech.SUCCESS) {

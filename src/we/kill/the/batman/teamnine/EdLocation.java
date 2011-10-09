@@ -13,6 +13,11 @@ public class EdLocation {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return location;
+	}
 
 
 
