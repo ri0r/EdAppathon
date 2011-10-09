@@ -43,6 +43,12 @@ public class DataBaseAccessor {
 		db.execSQL("insert into " + dbah.ROUTE_TABLE_NAME + "values(" + street + ");");
 	}
 	
+	public void insertLocations(List<EdLocation> edLocs) {
+		for (EdLocation edLoc : edLocs) {
+			insertStreet(edLoc.toString());
+		}
+	}
+	
 	public List<EdLocation> getAllLocations() {
 		 List<EdLocation> edlocs = new ArrayList<EdLocation>();
 		 Cursor c = db.query(dbah.MAKE_ROUTE_TABLE, new String[] {"street_name" }, null, null, null, null, null);
