@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    
-    <ListView android:id="@+id/android:list" 
-    	android:layout_width="wrap_content" 
-    	android:layout_height="wrap_content"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+	<TextView android:text="@string/warnings" 
+		android:id="@+id/warnings"
+		android:textSize="30px"
+		android:layout_gravity="center_horizontal"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"></TextView>
+	<LinearLayout android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView android:text="@string/from" 
+			android:id="@+id/rssFromLabel"
+			android:layout_height="wrap_content" android:layout_width="50dp"></TextView>
+		<TextView android:text="" 
+			android:id="@+id/rssFromText"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView android:text="@string/to" 
+			android:layout_height="wrap_content"
+			android:id="@+id/rssToLabel" android:layout_width="50dp"></TextView>
+		<TextView android:text="" 
+			android:layout_height="wrap_content"
+			android:id="@+id/rssToText" 
+			android:layout_width="wrap_content"></TextView>
+	</LinearLayout>
+	<Button android:text="Change route" 
+		android:id="@+id/rssChangeRouteButton"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"></Button>
+	<ListView android:layout_weight="1" 
+		android:id="@+id/android:list"
+		android:layout_height="wrap_content" 
+		android:layout_width="wrap_content"></ListView>
+
 </LinearLayout>
