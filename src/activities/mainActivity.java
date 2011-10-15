@@ -61,6 +61,17 @@ public class mainActivity extends ListActivity implements OnInitListener {
             }
         });
         
+        Button mapButton = (Button) findViewById(R.id.showWarningsOnMapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(v.getContext(), WarningOnMap.class);
+				startActivity(i);
+				
+			}
+		});
+        
         start = (TextView) findViewById(R.id.rssFromText);
         end = (TextView) findViewById(R.id.rssToText);
         
@@ -112,7 +123,6 @@ public class mainActivity extends ListActivity implements OnInitListener {
 
 	private void loadFeed(){
     	try{
-//    		Log.i("AndroidNews", "ParserType="+type.name());
 	    	FeedParser parser = FeedParserFactory.getParser();
 	    	long start = System.currentTimeMillis();
 	    	messages = parser.parse();
