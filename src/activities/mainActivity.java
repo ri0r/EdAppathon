@@ -10,6 +10,7 @@ import org.xmlpull.v1.XmlSerializer;
 import parser.FeedParser;
 import parser.FeedParserFactory;
 import parser.Message;
+import utils.Location;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,6 +29,10 @@ import batmanmustdie.src.R;
 public class mainActivity extends ListActivity implements OnInitListener {
 
 	private List<Message> messages;
+	double[] lat = new double[2];
+	double[] lon = new double[2];
+	String[] msg = new String[2];
+	
 	private TextToSpeech textToSpeech;
 	private Boolean ttsReady = false;
 	private TextView start;
@@ -45,6 +50,13 @@ public class mainActivity extends ListActivity implements OnInitListener {
         lv = getListView();
         setContentView(R.layout.rsslist);
         loadFeed();
+        // temporary hardcoded coordinates for testing
+        lat[0] = 53.5667294257814;
+        lat[1] = 52.3391636650016;
+        lon[0] = -2.23450725437083;
+        lon[1] = -0.206259282604262;
+        msg[0] = "warning 1";
+        msg[1] = "warning 2";
         
         // checks if text to speech is installed on the phone
         Intent checkIntent = new Intent();
@@ -62,13 +74,15 @@ public class mainActivity extends ListActivity implements OnInitListener {
         });
         
         Button mapButton = (Button) findViewById(R.id.showWarningsOnMapButton);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-			
+        mapButton.setOnClickListener(new View.OnClickListener() {       	
+	
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), WarningOnMap.class);
-				startActivity(i);
-				
+				i.putExtra("lat", lat);
+				i.putExtra("lon", lon);
+				i.putExtra("msg", msg);
+				startActivity(i);				
 			}
 		});
         
