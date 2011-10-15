@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,7 +12,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -36,7 +34,7 @@ public class Utility {
 		sb.append("&sensor=false");
 		sb.append("&alternatives=true&region=uk");
 		String s = sb.toString();
-		Pattern p = Pattern.compile("[\\s]");
+		//Pattern p = Pattern.compile("[\\s]");
 		Pattern road = Pattern.compile("[ABJM][0-9]+");
 		
 		JSONObject json = new JSONObject();

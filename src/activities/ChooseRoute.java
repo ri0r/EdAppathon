@@ -1,5 +1,10 @@
 package activities;
 
+import java.util.List;
+
+import utils.DataBaseAccessor;
+import utils.Location;
+import utils.Utility;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,11 +32,11 @@ public class ChooseRoute extends Activity{
     	Button goButton = (Button)findViewById(R.id.goButton);
     	goButton.setOnClickListener(new OnClickListener() {
     		public void onClick(View arg0) {
-    			// Disabled for now, must be tested later
-    			// getRoads will probably be called from mainActivity. No need for it here other than checking that the entered locations are correct
-//    			List<Location> edLocs = Utility.getRoads(v1.getText().toString(), v2.getText().toString());
-    			// insert start and destination into the database
-//    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
+    			 //Disabled for now, must be tested later
+    			 //getRoads will probably be called from mainActivity. No need for it here other than checking that the entered locations are correct
+    			List<Location> edLocs = Utility.getRoads(start.getText().toString(), end.getText().toString());
+    			 //insert start and destination into the database
+    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
     			
     			// Go back to mainActivity
     			Intent i = new Intent();
