@@ -5,7 +5,7 @@ import java.util.List;
 import data.DataBaseAccessor;
 
 import utils.Location;
-import utils.Utility;
+import utils.Controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,8 @@ public class ChooseRoute extends Activity{
 	
 	private final String TAG = "ChooseRoute";
 	
+	Controller controller = Controller.getInstance();
+	
 	public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	Log.d(TAG,"Got to ChooseRoute activity");
@@ -35,7 +37,7 @@ public class ChooseRoute extends Activity{
     		public void onClick(View arg0) {
     			 //Disabled for now, must be tested later
     			 //getRoads will probably be called from mainActivity. No need for it here other than checking that the entered locations are correct
-    			List<Location> edLocs = Utility.getRoads(start.getText().toString(), end.getText().toString());
+    			 List<Location> edLocs = controller.getRoads(start.getText().toString(), end.getText().toString());
     			 //insert start and destination into the database
 //    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
     			
