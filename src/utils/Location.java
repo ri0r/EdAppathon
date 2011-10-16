@@ -1,9 +1,14 @@
 package utils;
 
+/*
+ * Must maintain exact mapping with columns in table "roads" in database
+ */
+
 public class Location {
 	private String location;
 	private double longitude;
 	private double latitude;
+	private int routeID;
 	
 	public Location(String name) {
 		this.location = name;
@@ -12,6 +17,13 @@ public class Location {
 		this.longitude = lng;
 		this.latitude = lat;
 		this.location = name;
+	}
+	
+	public Location(String name, double lat, double lng, int routeID) {
+		this.longitude = lng;
+		this.latitude = lat;
+		this.location = name;
+		this.routeID = routeID;
 	}
 	
 	public String getLocation() {
@@ -41,6 +53,12 @@ public class Location {
 	}
 
 
+	public int getRouteID() {
+		return routeID;
+	}
+	public void setRouteID(int routeID) {
+		this.routeID = routeID;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

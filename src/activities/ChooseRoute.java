@@ -2,7 +2,8 @@ package activities;
 
 import java.util.List;
 
-import utils.DataBaseAccessor;
+import data.DataBaseAccessor;
+
 import utils.Location;
 import utils.Utility;
 import android.app.Activity;
