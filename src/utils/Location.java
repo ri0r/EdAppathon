@@ -26,11 +26,11 @@ public class Location {
 		this.routeID = routeID;
 	}
 	
-	public String getLocation() {
+	public String getLocationName() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocationName(String location) {
 		this.location = location;
 	}
 	public void setLongitude(double longitude) {

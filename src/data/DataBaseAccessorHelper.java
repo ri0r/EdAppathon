@@ -9,6 +9,7 @@ import java.util.List;
 
 import utils.Location;
 import utils.Property;
+import utils.Routes;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -135,10 +136,10 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	    
 	    //TODO refactor using DatabaseUtils
 	    
-	    public void insertRoute(String start, String end) {
+	    public void insertRoute(Routes r, Location l) {
 	    	//TODO add logic to make sure the same route does not exist
-	    	db.execSQL("insert into " + ROUTE_TABLE_NAME + "values(" 
-	    	+ start +  "," + end  + ");");
+	    	db.execSQL("insert into " + ROUTE_TABLE_NAME + "values("+ Integer.toString(r.getRouteID()) +","+  r.getStart() +","+ r.getEnd() +","+ l.getLocationName()
+	    			+","+ l.getLatitude() +","+ l.getLongitude() +");");
 	    }
 	    
 	    public void insertRoad(int routeID, String roadName, String lat, String lon) {
@@ -157,7 +158,7 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	    	
 	    	db.execSQL("insert into " + ROADS_TABLE_NAME + "values("
 	    			+ temp +  "," 
-	    			+ loc.getLocation()  + "," 
+	    			+ loc.getLocationName()  + "," 
 	    			+ Double.toString(loc.getLatitude()) +  "," 
 	    			+ Double.toString(loc.getLongitude()) +	");");
 	    }

@@ -1,6 +1,16 @@
 Batman won't die unless you read this!
 
-16/10
+
+16/10 -Roberto (going to focus on the database stuff)
++Made some changes to Location, (don't say getLocation...that shit is vague, getLocationName())
++Also looking to fix Database, but need to talk to Austin about what he's doing with Accessor.
++Can then populate listView
+
+-Trying to populate previous routes listView with random stuff, but it won't show up, maybe a layout problem, debug statement says its fine.
+-Either way the database stuff will be displayed there (most recent entries / most common);
+
+
+16/10 - Oleg
 
 Updates about current status of our app:
 Got a controller class (used to be called Utility).

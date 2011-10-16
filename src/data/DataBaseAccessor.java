@@ -17,7 +17,7 @@ public class DataBaseAccessor {
 	private final DataBaseAccessorHelper dbah;
 	private SQLiteDatabase db;
 	
-	private DataBaseAccessor(Context c) {
+	public DataBaseAccessor(Context c) {
 		this.context = c;
 		dbah = new DataBaseAccessorHelper(context);
 		open();
