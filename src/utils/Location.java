@@ -2,13 +2,13 @@ package utils;
 
 public class Location {
 	private String location;
-	private float longitude;
-	private float latitude;
+	private double longitude;
+	private double latitude;
 	
 	public Location(String name) {
 		this.location = name;
 	}
-	public Location(String name, float lat, float lng) {
+	public Location(String name, double lat, double lng) {
 		this.longitude = lng;
 		this.latitude = lat;
 		this.location = name;
@@ -21,22 +21,22 @@ public class Location {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
 
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
 
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 

@@ -72,8 +72,8 @@ public class Utility {
 					JSONObject jstep = jsteps.getJSONObject(i);
 					String instr = jstep.getString("html_instructions");
 					JSONObject jstart = jstep.getJSONObject("start_location");
-					float lat = Float.parseFloat(jstart.getString("lat"));
-					float lng = Float.parseFloat(jstart.getString("lng"));
+					double lat = Double.parseDouble(jstart.getString("lat"));
+					double lng = Double.parseDouble(jstart.getString("lng"));
 					Matcher m = road.matcher(instr);
 					while (m.find()) {
 						
