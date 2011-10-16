@@ -27,13 +27,18 @@ public class Utility {
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://maps.googleapis.com/maps/api/directions/json?origin=");
 		
-		sb.append(start.trim());
+		sb.append(
+				start.trim().replaceAll("[\\s]+", "+")
+				);
 		
 		sb.append("&destination=");
-		sb.append(end.trim());
+		sb.append(
+				end.trim().replaceAll("[\\s]+", "+")
+				);
 		sb.append("&sensor=false");
 		sb.append("&alternatives=true&region=uk");
 		String s = sb.toString();
+		
 		//Pattern p = Pattern.compile("[\\s]");
 		Pattern road = Pattern.compile("[ABJM][0-9]+");
 		
