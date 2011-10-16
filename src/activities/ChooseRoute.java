@@ -37,7 +37,7 @@ public class ChooseRoute extends Activity{
     			 //getRoads will probably be called from mainActivity. No need for it here other than checking that the entered locations are correct
     			List<Location> edLocs = Utility.getRoads(start.getText().toString(), end.getText().toString());
     			 //insert start and destination into the database
-    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
+//    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
     			
     			// Go back to mainActivity
     			Intent i = new Intent();

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utils.Location;
-
+import utils.Property;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -133,6 +133,7 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	       // You could return cursors by doing "return db.query(....)" so it'd be easy
 	       // to you to create adapters for your views.
 	    
+	    //TODO refactor using DatabaseUtils
 	    
 	    public void insertRoute(String start, String end) {
 	    	//TODO add logic to make sure the same route does not exist
@@ -148,7 +149,7 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	    			+ lon + " );");
 	    }
 	    
-	    public void insertLocation(Location loc) {
+	    public void insertRoad(Location loc) {
 	    	int temp = 0;
 	    	if (loc.getRouteID() != 0 ) {
 	    		temp = loc.getRouteID();
@@ -162,10 +163,36 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	    }
 	    
 	    public List<Location> getAllLocations() {
-	    	return null;
+	    	List<Location> locs = new ArrayList<Location>();
+	    	
+	    	String query = "select * from " + ROADS_TABLE_NAME + ";";
+	    	Cursor c = db.query(true, ROADS_TABLE_NAME, null, query, null, null, null, null, null);
+	    	
+	    	if (c.isBeforeFirst()) {
+	    		while (c.moveToNext()) {
+	    			
+	    		}
+	    	}
+	    	
+	    	return locs;
 	    }
 	    
 	    public List<Location> getLocationsByRouteID(int routeID) {
+	    	return null;
+	    }
+	    
+	    public void insertUserInformation(String property, String value) {
+
+	    }
+	    public void insertUserInformation(Property prop) {
+
+	    }
+	    
+	    public String getUserInfoByProperty(String property) {
+	    	return null;
+	    }
+	    
+	    public List<Property> getAllUserProperty() {
 	    	return null;
 	    }
 	    
