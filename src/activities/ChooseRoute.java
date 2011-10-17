@@ -54,13 +54,15 @@ public class ChooseRoute extends Activity{
     			 //insert start and destination into the database
 //    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
     			 
-    			 prevRoutes.add(new Routes(startLocation, endLocation, routeId));
+    			 // Not needed, just save the values in the database
+    			 //prevRoutes.add(new Routes(startLocation, endLocation, routeId));
+    			 
     			 
     			// Go back to mainActivity
     			Intent i = new Intent();
     			i.putExtra("start", startLocation);
     			i.putExtra("end", endLocation);
-    			routeId++;
+    			routeId++; // not sure why this is needed, Oleg
                 setResult(RESULT_OK, i);
                 finish();
     		}
@@ -75,17 +77,18 @@ public class ChooseRoute extends Activity{
 		});
     	
     	/*Why doesnt this work?
+    	 * 
     	 */
-    	
-    	if (prevRoutes != null){
+    	// test
+    	prevRoutes.add(new Routes("start", "end", routeId));
+		 prevRoutes.add(new Routes("start", "end2", routeId));
+    	if (prevRoutes != null) { 
     		Log.d("ChooseRoute", "Trying to display Previous routes");
-    		ArrayAdapter<Routes> listRoutes = new ArrayAdapter<Routes>(this, R.layout.testlayout, prevRoutes);
     		ArrayList<String> a1 = new ArrayList<String>();
     		for (Routes r: prevRoutes){
     			a1.add(r.getStart()+" - "+r.getEnd());
     		}
     		ArrayAdapter<String> a2 = new ArrayAdapter<String>(this, R.layout.testlayout, a1);
-    		//ArrayAdapter<String> a = new ArrayAdapter<String>(this, android.R.layout.)
     		viewPrevRoutes.setAdapter(a2);
     	}
     }

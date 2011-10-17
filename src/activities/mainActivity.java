@@ -14,7 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import batmanmustdie.src.R;
+import batmanmustdie.src.*;
+//import batmanmustdie.src.R;
 
 public class mainActivity extends ListActivity implements OnInitListener {
 

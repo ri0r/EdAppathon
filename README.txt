@@ -1,6 +1,10 @@
 Batman won't die unless you read this!
 
 
+16/10 - Oleg
+listview for displaying prev routes history works now. Just needs the input from the database.
+
+
 16/10 -Roberto (going to focus on the database stuff)
 +Made some changes to Location, (don't say getLocation...that shit is vague, getLocationName())
 +Also looking to fix Database, but need to talk to Austin about what he's doing with Accessor.
