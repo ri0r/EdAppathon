@@ -20,7 +20,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	
 	// not sure why this is here, unused
-//	private Context mContext;
+	// private Context mContext;
 	public static final String DB_NAME = "tbdb.sqlite";	
 	public static final String ROUTE_TABLE_NAME = "routes";
 	public static final String ROADS_TABLE_NAME = "roads";
@@ -115,7 +115,7 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	 
 	    	//Open the database
 	        String myPath = DB_PATH + DB_NAME;
-	    	db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+	    	db = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 	    }
 	 
 	    @Override
@@ -130,16 +130,29 @@ public class DataBaseAccessorHelper extends SQLiteOpenHelper {
 	    
 	    
 	 	 
-	        // Add your public helper methods to access and get content from the database.
+	       // Add your public helper methods to access and get content from the database.
 	       // You could return cursors by doing "return db.query(....)" so it'd be easy
 	       // to you to create adapters for your views.
 	    
 	    //TODO refactor using DatabaseUtils
 	    
-	    public void insertRoute(Routes r, Location l) {
+	    public void insertRoute(Routes r) {
 	    	//TODO add logic to make sure the same route does not exist
-	    	db.execSQL("insert into " + ROUTE_TABLE_NAME + "values("+ Integer.toString(r.getRouteID()) +","+  r.getStart() +","+ r.getEnd() +","+ l.getLocationName()
-	    			+","+ l.getLatitude() +","+ l.getLongitude() +");");
+	    	
+	    	db.execSQL("insert into " + ROUTE_TABLE_NAME + " values("
+	    			+ "NULL, '"
+	    			+ r.getStart() +"', '"
+	    			+ r.getEnd() +"' );");
+	    }
+	    
+	    public ArrayList<String> getRoutes(){
+	    	Cursor c = db.rawQuery("select * from "+ ROUTE_TABLE_NAME +"", null);
+	    	c.moveToFirst();
+	    	ArrayList<String> route = new ArrayList<String>();
+	    	while(c.moveToNext()){
+	    		route.add(c.getString(1)+" to "+ c.getString(2));
+	    	}
+	    	return route;
 	    }
 	    
 	    public void insertRoad(int routeID, String roadName, String lat, String lon) {
