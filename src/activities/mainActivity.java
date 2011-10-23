@@ -1,5 +1,7 @@
 package activities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import utils.Controller;
@@ -11,6 +13,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,7 +29,7 @@ public class mainActivity extends ListActivity implements OnInitListener {
 	private TextToSpeech textToSpeech;
 	private Boolean ttsReady = false;
 	private TextView start;
-	private TextView end;
+	private TextView end;  
 	ListView lv;
 	Controller controller = Controller.getInstance();
 	
@@ -34,21 +37,17 @@ public class mainActivity extends ListActivity implements OnInitListener {
 	public final int TEXT_TO_SPEECH_CHECK_CODE = 1;
 	private final String TAG = "mainActivity";
 	
+	ArrayAdapter<String> adapter;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lv = getListView();
         setContentView(R.layout.rsslist);
-        this.setListAdapter(controller.getRelevantFeedEntries(this));
-        // temporary hardcoded coordinates for testing
-        // controller class will provide this data
-        lat[0] = 53.5667294257814;
-        lat[1] = 52.3391636650016;
-        lon[0] = -2.23450725437083;
-        lon[1] = -0.206259282604262;
-        msg[0] = "warning 1";
-        msg[1] = "warning 2";
+        controller.getRelevantFeedEntries(); // Updates the feed and gets relevant entries, returns controller.relevantTitles 
+        adapter = new ArrayAdapter<String>(this, R.layout.rssrow, controller.relevantTitles);             
+        this.setListAdapter(adapter);
         
         // checks if text to speech is installed on the phone
         Intent checkIntent = new Intent();
@@ -111,10 +110,23 @@ public class mainActivity extends ListActivity implements OnInitListener {
         	// read out updates
             if (ttsReady) {
             	Log.d(TAG, "speaking");
-                String myText1 = "Did you sleep well?";
-                String myText2 = "I hope so, because it's time to wake up.";
-            	textToSpeech.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
-            	textToSpeech.speak(myText2, TextToSpeech.QUEUE_ADD, null);
+            	
+//                String myText1 = fromTo.getString("start");
+//                String myText2 = fromTo.getString("end");
+                List<String> templist = controller.getRelevantFeedEntries();
+                int num = templist.size();
+                if (num > 0) {
+                	String initial = templist.get(0);
+                	initial = initial.replace('|', ' ');
+                	textToSpeech.speak(initial, TextToSpeech.QUEUE_FLUSH, null);
+                	for (int i =1; i < num; i++) {
+                    	initial = templist.get(i);
+                    	initial = initial.replace('|', ' ');
+                		textToSpeech.speak(initial, TextToSpeech.QUEUE_ADD, null);
+                	}
+                }
+//            	textToSpeech.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
+//            	textToSpeech.speak(myText2, TextToSpeech.QUEUE_ADD, null);
             } 
         }
     }

@@ -1,10 +1,12 @@
 package activities;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import data.DataBaseAccessor;
+import data.DataBaseAccessorHelper;
 
 import utils.Location;
 import utils.Controller;
@@ -30,15 +32,20 @@ public class ChooseRoute extends Activity{
 	private final String TAG = "ChooseRoute";
 	
 	Controller controller = Controller.getInstance();
-	
-	List<Routes> prevRoutes = new ArrayList<Routes>();
-	int routeId = 0;
-	
+		
 	public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	Log.d(TAG,"Got to ChooseRoute activity");
     	setContentView(R.layout.chooseroutes);
     	
+    	final DataBaseAccessorHelper dah = new DataBaseAccessorHelper(getApplicationContext());
+    	try {
+    		dah.createDataBase();
+    	} catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	dah.openDataBase();
     	final TextView start = (TextView)findViewById(R.id.startLocationEditor);
 		final TextView end = (TextView)findViewById(R.id.endLocationEditor);
 		final ListView viewPrevRoutes = (ListView) findViewById(R.id.savedRoutesListView);
@@ -52,17 +59,21 @@ public class ChooseRoute extends Activity{
     		
     			 List<Location> edLocs = controller.getRoads(startLocation, endLocation);
     			 //insert start and destination into the database
+    			 
+    			 
+    			
+    			 dah.insertRoute(new Routes(startLocation, endLocation));
+    	
 //    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
     			 
     			 // Not needed, just save the values in the database
-    			 prevRoutes.add(new Routes(startLocation, endLocation, routeId));
     			 
     			 
     			// Go back to mainActivity
     			Intent i = new Intent();
     			i.putExtra("start", startLocation);
     			i.putExtra("end", endLocation);
-    			routeId++; // not sure why this is needed, Oleg
+    			// not sure why this is needed, Oleg
                 setResult(RESULT_OK, i);
                 finish();
     		}
@@ -80,15 +91,16 @@ public class ChooseRoute extends Activity{
     	 * 
     	 */
     	// test
-    	prevRoutes.add(new Routes("start", "end", routeId));
-		prevRoutes.add(new Routes("start", "end2", routeId));
+
+    	ArrayList<String> prevRoutes = dah.getRoutes();
+    	Log.d("Accessing DB", ""+prevRoutes.size());
     	if (prevRoutes != null) { 
     		Log.d("ChooseRoute", "Trying to display Previous routes");
     		ArrayList<String> a1 = new ArrayList<String>();
-    		for (Routes r: prevRoutes){
-    			a1.add(r.getStart()+" - "+r.getEnd());
-    		}
-    		ArrayAdapter<String> a2 = new ArrayAdapter<String>(this, R.layout.testlayout, a1);
+//    		for (String r: prevRoutes){
+//    			a1.add(r.getStart()+" - "+r.getEnd());
+//    		}
+    		ArrayAdapter<String> a2 = new ArrayAdapter<String>(this, R.layout.testlayout, prevRoutes);
     		viewPrevRoutes.setAdapter(a2);
     	}
     }

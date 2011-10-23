@@ -1,5 +1,6 @@
 package utils;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -22,6 +23,8 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import batmanmustdie.src.R;
 
+import com.google.android.maps.GeoPoint;
+
 
 public class Controller {
 	
@@ -43,10 +46,37 @@ public class Controller {
 	
 	private List<Message> allMessages; // all messages from RRS feed
 	public List<Message> relevantMessages = new ArrayList<Message>(); // used by mainActivity when user clicks an item in the list, might not be used later on
-	
+	public List<String> relevantTitles = new ArrayList<String>();
 	private ArrayList<String> roadNames = new ArrayList<String>();
 	
-	public List<String> loadFeed(Context c){
+	public List<GeoPoint> getLocations() {
+		ArrayList<GeoPoint> locations = new ArrayList<GeoPoint>();
+		GeoPoint point;
+		URL link;
+		Matcher m;
+		String str;
+		String lat;
+		String lon;
+		for (Message msg : relevantMessages) {
+			link = msg.getLink();
+			str = link.toString();
+			Pattern latPattern = Pattern.compile("lat=-?[0-9.]+");
+			Pattern lonPattern = Pattern.compile("lon=-?[0-9.]+");
+			m = latPattern.matcher(str);
+			m.find();
+			lat = m.group(0).substring(4);
+			m = lonPattern.matcher(str);
+			m.find();
+			lon = m.group(0).substring(4);
+			point = new GeoPoint((int) (Double.parseDouble(lat) * 1E6), (int) (Double.parseDouble(lon) * 1E6));
+			locations.add(point);
+			Log.d(TAG, lat);
+		}
+		
+		return locations;
+	}
+	
+	public List<String> loadFeed(){
 		List<String> titles = new ArrayList<String>();
     	try{
 	    	FeedParser parser = FeedParserFactory.getParser();
@@ -68,11 +98,14 @@ public class Controller {
 	
 	// checks if roads retrieved from Google navigation occur in any of the
 	// RSS feed entries	
-	public ArrayAdapter<String> getRelevantFeedEntries(Context c) {
+	public List<String> getRelevantFeedEntries() {
+		relevantMessages = new ArrayList<Message>();
+		allMessages = new ArrayList<Message>();
 		getRoads("Edinburgh", "London");
+		String[] roadNames={"M6","M4","M5","A5"};
 		List<Integer> foundIndexes = new ArrayList<Integer>(); // used to solve the contains problem below
-		List<String> relevantTitles = new ArrayList<String>();
-		List<String> allTitles = loadFeed(c); // get all feed entries from RSS feed
+		relevantTitles = new ArrayList<String>();
+		List<String> allTitles = loadFeed(); // get all feed entries from RSS feed
 		for (String roadName : roadNames) {
 			for (int i=0;i<allTitles.size();i++) {
 				if (allTitles.get(i).contains(roadName)) {// contains is a bad check, M6 is contained in both M6 and M68
@@ -85,10 +118,10 @@ public class Controller {
 				}
 			}
 		}
+		
 		Log.d(TAG, "relevant messages: "+relevantMessages.size());
-		ArrayAdapter<String> adapter = 
-	    		new ArrayAdapter<String>(c, R.layout.rssrow, relevantTitles);
-		return adapter;
+		
+		return relevantTitles;
 	}
 	
 	
@@ -101,7 +134,7 @@ public class Controller {
 		sb.append("&sensor=false");
 		sb.append("&alternatives=true&region=uk");
 		String s = sb.toString();
-		
+		Log.d(TAG, s);
 		Pattern road = Pattern.compile("[ABJM][0-9]+");
 		
 		JSONObject json = new JSONObject();

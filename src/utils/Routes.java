@@ -17,6 +17,13 @@ public class Routes {
 		this.routeID = routeID;
 	}
 	
+	public Routes(String start, String end) {
+		super();
+		this.start = start;
+		this.end = end;
+		this.routeID = 0;
+	}
+	
 	public String getStart() {
 		return start;
 	}
