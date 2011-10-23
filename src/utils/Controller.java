@@ -117,8 +117,7 @@ public class Controller {
 					Log.d(TAG, "new message, index: "+i);
 				}
 			}
-		}
-		
+		}		
 		Log.d(TAG, "relevant messages: "+relevantMessages.size());
 		
 		return relevantTitles;
