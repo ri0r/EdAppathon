@@ -55,7 +55,7 @@ public class ChooseRoute extends Activity{
 //    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
     			 
     			 // Not needed, just save the values in the database
-    			 //prevRoutes.add(new Routes(startLocation, endLocation, routeId));
+    			 prevRoutes.add(new Routes(startLocation, endLocation, routeId));
     			 
     			 
     			// Go back to mainActivity
@@ -81,7 +81,7 @@ public class ChooseRoute extends Activity{
     	 */
     	// test
     	prevRoutes.add(new Routes("start", "end", routeId));
-		 prevRoutes.add(new Routes("start", "end2", routeId));
+		prevRoutes.add(new Routes("start", "end2", routeId));
     	if (prevRoutes != null) { 
     		Log.d("ChooseRoute", "Trying to display Previous routes");
     		ArrayList<String> a1 = new ArrayList<String>();
