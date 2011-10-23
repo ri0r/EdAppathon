@@ -70,9 +70,10 @@ public class ChooseRoute extends Activity{
     			 
     			 
     			// Go back to mainActivity
-    			Intent i = new Intent();
+    			Intent i = new Intent(view.getContext(), mainActivity.class);
     			i.putExtra("start", startLocation);
     			i.putExtra("end", endLocation);
+    			startActivity(i);
     			// not sure why this is needed, Oleg
                 setResult(RESULT_OK, i);
                 finish();
