@@ -13,4 +13,6 @@
     <string name="endLocation">End Location</string>
     <string name="go">Go!</string>
     <string name="switchloc">Switch</string>
+    <string name="inputRoute">Input Route</string>
+    <string name="viewRoute">View Route</string>
 </resources>
