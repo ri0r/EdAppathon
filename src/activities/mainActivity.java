@@ -1,6 +1,5 @@
 package activities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -9,6 +8,8 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
@@ -17,10 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import batmanmustdie.src.*;
-//import batmanmustdie.src.R;
+import batmanmustdie.src.R;
 
-public class mainActivity extends ListActivity implements OnInitListener {
+public class mainActivity extends ListActivity implements OnInitListener, Runnable {
 
 	double[] lat = new double[2];
 	double[] lon = new double[2];
@@ -38,6 +38,7 @@ public class mainActivity extends ListActivity implements OnInitListener {
 	private final String TAG = "mainActivity";
 	
 	ArrayAdapter<String> adapter;
+	Handler handler;
 	
 	
     @Override
@@ -48,6 +49,35 @@ public class mainActivity extends ListActivity implements OnInitListener {
         controller.getRelevantFeedEntries(); // Updates the feed and gets relevant entries, returns controller.relevantTitles 
         adapter = new ArrayAdapter<String>(this, R.layout.rssrow, controller.relevantTitles);             
         this.setListAdapter(adapter);
+        
+        
+    	handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+            	List<String> oldFeed = controller.relevantTitles;
+//            	List<String> newFeed = controller.getRelevantFeedEntries();
+            	controller.relevantTitles.add("New example feed"); // for testing purposes
+            	List<String> newFeed = controller.relevantTitles;
+            	for (String newEntry : newFeed) {
+            		if (oldFeed.contains(newEntry)) { // very strange, but it works, should be if it doesn't contain
+            			Log.d(TAG, newEntry);
+            			 if (ttsReady) {
+            	            Log.d(TAG, "speaking");
+            	            textToSpeech.speak(newEntry, TextToSpeech.QUEUE_FLUSH, null);
+            			 } else {
+            				 Log.d(TAG, "TTS is not ready yet");
+            			 }
+            			
+            		}
+            	}
+//            	controller.relevantTitles.add("New example feed"); // for testing purposes
+            	adapter = new ArrayAdapter<String>(mainActivity.this, R.layout.rssrow, controller.relevantTitles);
+            	mainActivity.this.setListAdapter(adapter);
+            }
+    	};
+    	 Thread thread = new Thread(this);
+         thread.start();
+        
         
         // checks if text to speech is installed on the phone
         Intent checkIntent = new Intent();
@@ -160,6 +190,18 @@ public class mainActivity extends ListActivity implements OnInitListener {
         }
 		
 	}
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(10000);
+			} catch(Exception e) {
+				Log.e(TAG, e.toString());
+			}
+			handler.sendEmptyMessage(0);
+		}		
+	}
+
 
 	
 }
