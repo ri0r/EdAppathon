@@ -1,29 +1,27 @@
 package activities;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.DataBaseAccessor;
-import data.DataBaseAccessorHelper;
-
-import utils.Location;
 import utils.Controller;
+import utils.Location;
 import utils.Routes;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import batmanmustdie.src.R;
+import data.DataBaseAccessorHelper;
 
 public class ChooseRoute extends Activity{
 	
@@ -58,35 +56,39 @@ public class ChooseRoute extends Activity{
     			String endLocation = end.getText().toString();
     		
     			 List<Location> edLocs = controller.getRoads(startLocation, endLocation);
-    			 //insert start and destination into the database
-    			 
-    			 
-    			
-    			 dah.insertRoute(new Routes(startLocation, endLocation));
-    	
-//    			DataBaseAccessor.getInstance(c).insertLocations(edLocs);
-    			 
-    			 // Not needed, just save the values in the database
-    			 
+    			 //insert start and destination into the database   			 
+    			 dah.insertRoute(new Routes(startLocation, endLocation)); 
     			 
     			// Go back to mainActivity
     			Intent i = new Intent(view.getContext(), mainActivity.class);
-    			i.putExtra("start", startLocation);
-    			i.putExtra("end", endLocation);
+    			controller.currentRoute[0] = startLocation;
+				controller.currentRoute[1] = endLocation;
     			startActivity(i);
     			// not sure why this is needed, Oleg
                 setResult(RESULT_OK, i);
                 finish();
     		}
     	});
-    	Button switchButton = (Button) findViewById(R.id.switchButton);
-    	switchButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				String temp = start.getText().toString();
-				start.setText(end.getText().toString());
-				end.setText(temp);
+    	viewPrevRoutes.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				String s = (String) viewPrevRoutes.getItemAtPosition(position);
+				String[] se = s.split(" to ");
+				Log.d(TAG, "start: ".concat(se[0]));
+				Log.d(TAG, "stop: ".concat(se[1]));
+				controller.currentRoute[0] = se[0];
+				controller.currentRoute[1] = se[1];
+				// Go back to mainActivity
+    			Intent i = new Intent(view.getContext(), mainActivity.class);
+    			startActivity(i);
+    			// not sure why this is needed, Oleg
+                setResult(RESULT_OK, i);
+                finish();
 			}
-		});
+    		
+    	});
     	
     	/*Why doesnt this work?
     	 * 

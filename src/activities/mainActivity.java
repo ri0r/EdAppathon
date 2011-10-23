@@ -33,7 +33,7 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 	ListView lv;
 	Controller controller = Controller.getInstance();
 	
-	public final int CHOOSE_ROUTE_CODE = 0;
+	public final int CHOOSE_ROUTE_CODE = 22;
 	public final int TEXT_TO_SPEECH_CHECK_CODE = 1;
 	private final String TAG = "mainActivity";
 	
@@ -42,13 +42,17 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 	Boolean speechOn = true;
 	Button speachButton;
 	int test = 0;
+	volatile Boolean updateThreadPaused = false;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lv = getListView();
         setContentView(R.layout.rsslist);
-        controller.getRelevantFeedEntries(); // Updates the feed and gets relevant entries, returns controller.relevantTitles 
+        controller.getRelevantFeedEntries(); // Updates the feed and gets relevant entries, returns controller.relevantTitles
+        if (controller.relevantTitles.isEmpty()) {
+        	controller.relevantTitles.add("No warnings on this route");
+        }
         adapter = new ArrayAdapter<String>(this, R.layout.rssrow, controller.relevantTitles);             
         this.setListAdapter(adapter);
         
@@ -97,6 +101,7 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
             public void onClick(View v) {
                 // Load the route chooser activity
             	// It expects to get back values for To and From textviews
+            	updateThreadPaused = true;
               	Intent i = new Intent(v.getContext(), ChooseRoute.class);
               	startActivityForResult(i, CHOOSE_ROUTE_CODE);
             }
@@ -119,11 +124,11 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 			public void onClick(View v) {
 				if (speechOn) {
 					speechOn = false;
-					speachButton.setText("Sound off");
+					speachButton.setText("Sound on");
 					textToSpeech.stop();
 				} else {
 					speechOn = true;
-					speachButton.setText("Sound on");
+					speachButton.setText("Sound off");
 				}			
 			}
 		});
@@ -134,8 +139,23 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
         // TODO
         // implement a timer that pulls the RSS feed, updates the listview and reads to the user
     }
-    protected void onActivityResult(
-            int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	Log.d(TAG, "Got back to mainActivity");
+//        if (resultCode == CHOOSE_ROUTE_CODE) {      	
+    	// Update the current To and From fields
+    	Log.w(TAG, "got back from ChooseRoute!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    	
+    	updateThreadPaused = true;
+    	this.start.setText(controller.currentRoute[0]);
+    	this.end.setText(controller.currentRoute[1]);
+    	test = 0;
+    	controller.getRelevantFeedEntries();
+    	if (controller.relevantTitles.isEmpty()) {
+        	controller.relevantTitles.add("No warnings on this route");
+        } 
+    	updateThreadPaused = false;
+        	
         if (requestCode == TEXT_TO_SPEECH_CHECK_CODE) {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
                 // success, create the TTS instance
@@ -147,39 +167,8 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
                 installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
                 startActivity(installIntent);
             }
-        } else if (requestCode == CHOOSE_ROUTE_CODE) {
-        	// update the warnings for the current route
-        	// TODO implement it!
-        	
-        	// Update the current To and From fields
-        	Bundle fromTo = data.getExtras();
-        	if (fromTo != null) {
-        		// string names are "start" and "end"
-        		this.start.setText(fromTo.getString("start"));
-        		this.end.setText(fromTo.getString("end"));
-        	}
-        	// read out updates
-            if (ttsReady) {
-            	Log.d(TAG, "speaking");
-            	
-//                String myText1 = fromTo.getString("start");
-//                String myText2 = fromTo.getString("end");
-                List<String> templist = controller.getRelevantFeedEntries();
-                int num = templist.size();
-                if (num > 0) {
-                	String initial = templist.get(0);
-                	initial = initial.replace('|', ' ');
-                	textToSpeech.speak(initial, TextToSpeech.QUEUE_FLUSH, null);
-                	for (int i =1; i < num; i++) {
-                    	initial = templist.get(i);
-                    	initial = initial.replace('|', ' ');
-                		textToSpeech.speak(initial, TextToSpeech.QUEUE_ADD, null);
-                	}
-                }
-//            	textToSpeech.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
-//            	textToSpeech.speak(myText2, TextToSpeech.QUEUE_ADD, null);
-            } 
-        }
+        } 
+
     }
 
 	@Override
@@ -189,8 +178,6 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 				Uri.parse(controller.relevantMessages.get(position).getLink().toExternalForm()));
 		this.startActivity(viewMessage);
 	}
-	
-
 	
 	
 	@Override
@@ -218,7 +205,9 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 			} catch(Exception e) {
 				Log.e(TAG, e.toString());
 			}
-			handler.sendEmptyMessage(0);
+			if (!updateThreadPaused) {
+				handler.sendEmptyMessage(0);
+			}
 		}		
 	}
 

@@ -29,7 +29,8 @@ import com.google.android.maps.GeoPoint;
 public class Controller {
 	
 	private Controller() {
-		
+		currentRoute[0] = "";
+		currentRoute[1] = "";
 	}
 	
 	public static Controller getInstance() {
@@ -48,6 +49,7 @@ public class Controller {
 	public List<Message> relevantMessages = new ArrayList<Message>(); // used by mainActivity when user clicks an item in the list, might not be used later on
 	public List<String> relevantTitles = new ArrayList<String>();
 	private ArrayList<String> roadNames = new ArrayList<String>();
+	public String[] currentRoute = new String[2];
 	
 	public List<GeoPoint> getLocations() {
 		ArrayList<GeoPoint> locations = new ArrayList<GeoPoint>();
@@ -102,7 +104,8 @@ public class Controller {
 		relevantMessages = new ArrayList<Message>();
 		allMessages = new ArrayList<Message>();
 //		getRoads("Edinburgh", "London");
-		String[] roadNames={"M6","M4","M5","A5"};
+		getRoads(currentRoute[0], currentRoute[1]);
+//		String[] roadNames={"M6","M4","M5","A5"};
 		List<Integer> foundIndexes = new ArrayList<Integer>(); // used to solve the contains problem below
 		relevantTitles = new ArrayList<String>();
 		List<String> allTitles = loadFeed(); // get all feed entries from RSS feed

@@ -21,11 +21,6 @@
 		android:hint="Destination">
 	</EditText>
 	<Button android:layout_height="wrap_content" 
-		android:id="@+id/switchButton"
-		android:text="@string/switchloc" 
-		android:layout_width="match_parent">
-	</Button>
-	<Button android:layout_height="wrap_content" 
 		android:id="@+id/goButton"
 		android:text="@string/go" 
 		android:layout_width="match_parent">

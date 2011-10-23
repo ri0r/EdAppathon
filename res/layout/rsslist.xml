@@ -47,7 +47,7 @@
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
 		android:layout_weight="1"></Button>
-	<Button android:text="Sound on" 
+	<Button android:text="Sound off" 
 		android:id="@+id/speechButton"
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"

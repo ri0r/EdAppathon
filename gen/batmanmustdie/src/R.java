@@ -16,24 +16,23 @@ public final class R {
         public static final int warning=0x7f020002;
     }
     public static final class id {
-        public static final int TextView01=0x7f05000f;
+        public static final int TextView01=0x7f05000e;
         public static final int endLocationEditor=0x7f050001;
-        public static final int goButton=0x7f050003;
-        public static final int inputRoutes=0x7f050010;
-        public static final int mainlayout=0x7f050005;
-        public static final int mapview=0x7f050006;
-        public static final int rssChangeRouteButton=0x7f05000c;
-        public static final int rssFromLabel=0x7f050008;
-        public static final int rssFromText=0x7f050009;
-        public static final int rssToLabel=0x7f05000a;
-        public static final int rssToText=0x7f05000b;
-        public static final int savedRoutesListView=0x7f050004;
-        public static final int showWarningsOnMapButton=0x7f05000d;
-        public static final int speechButton=0x7f05000e;
+        public static final int goButton=0x7f050002;
+        public static final int inputRoutes=0x7f05000f;
+        public static final int mainlayout=0x7f050004;
+        public static final int mapview=0x7f050005;
+        public static final int rssChangeRouteButton=0x7f05000b;
+        public static final int rssFromLabel=0x7f050007;
+        public static final int rssFromText=0x7f050008;
+        public static final int rssToLabel=0x7f050009;
+        public static final int rssToText=0x7f05000a;
+        public static final int savedRoutesListView=0x7f050003;
+        public static final int showWarningsOnMapButton=0x7f05000c;
+        public static final int speechButton=0x7f05000d;
         public static final int startLocationEditor=0x7f050000;
-        public static final int switchButton=0x7f050002;
-        public static final int viewRoute=0x7f050011;
-        public static final int warnings=0x7f050007;
+        public static final int viewRoute=0x7f050010;
+        public static final int warnings=0x7f050006;
     }
     public static final class layout {
         public static final int chooseroutes=0x7f030000;
