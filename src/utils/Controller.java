@@ -101,7 +101,7 @@ public class Controller {
 	public List<String> getRelevantFeedEntries() {
 		relevantMessages = new ArrayList<Message>();
 		allMessages = new ArrayList<Message>();
-		getRoads("Edinburgh", "London");
+//		getRoads("Edinburgh", "London");
 		String[] roadNames={"M6","M4","M5","A5"};
 		List<Integer> foundIndexes = new ArrayList<Integer>(); // used to solve the contains problem below
 		relevantTitles = new ArrayList<String>();
