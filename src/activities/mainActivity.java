@@ -11,6 +11,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -111,10 +112,23 @@ public class mainActivity extends ListActivity implements OnInitListener {
         	// read out updates
             if (ttsReady) {
             	Log.d(TAG, "speaking");
-                String myText1 = fromTo.getString("start");
-                String myText2 = fromTo.getString("end");
-            	textToSpeech.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
-            	textToSpeech.speak(myText2, TextToSpeech.QUEUE_ADD, null);
+            	
+//                String myText1 = fromTo.getString("start");
+//                String myText2 = fromTo.getString("end");
+                ArrayAdapter<String> templist = controller.getRelevantFeedEntries(this);
+                int num = templist.getCount();
+                if (num > 0) {
+                	String initial = templist.getItem(0);
+                	initial = initial.replace('|', ' ');
+                	textToSpeech.speak(initial, TextToSpeech.QUEUE_FLUSH, null);
+                	for (int i =1; i < num; i++) {
+                    	initial = templist.getItem(i);
+                    	initial = initial.replace('|', ' ');
+                		textToSpeech.speak(initial, TextToSpeech.QUEUE_ADD, null);
+                	}
+                }
+//            	textToSpeech.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
+//            	textToSpeech.speak(myText2, TextToSpeech.QUEUE_ADD, null);
             } 
         }
     }
