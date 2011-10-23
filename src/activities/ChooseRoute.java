@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -69,6 +70,8 @@ public class ChooseRoute extends Activity{
                 finish();
     		}
     	});
+    	
+    	
     	viewPrevRoutes.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -89,7 +92,7 @@ public class ChooseRoute extends Activity{
     		
     	});
 
-    	ArrayList<String> prevRoutes = dah.getRoutes();
+    	final ArrayList<String> prevRoutes = dah.getRoutes();
     	Log.d("Accessing DB", ""+prevRoutes.size());
     	if (prevRoutes != null) { 
     		Log.d("ChooseRoute", "Trying to display Previous routes");
@@ -97,6 +100,17 @@ public class ChooseRoute extends Activity{
     		ArrayAdapter<String> a2 = new ArrayAdapter<String>(this, R.layout.testlayout, prevRoutes);
     		viewPrevRoutes.setAdapter(a2);
     	}
+    	viewPrevRoutes.setOnItemLongClickListener(new OnItemLongClickListener(){
+    		
+    		@Override
+    		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+    				int arg2, long arg3) {
+    			prevRoutes.remove(arg2);
+    			viewPrevRoutes.invalidateViews();
+    			return false;
+    		}
+    		
+    	});
     }
 	
 }
