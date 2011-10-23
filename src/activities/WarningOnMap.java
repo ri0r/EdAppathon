@@ -1,7 +1,9 @@
 package activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import utils.Controller;
 import utils.MapItems;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,9 +28,9 @@ public class WarningOnMap extends MapActivity {
 	Drawable drawable;
 	MapItems itemizedOverlay;
 	OverlayItem overlayitem;
-	double[] lat;
-	double[] lon;
-	String[] msg;
+
+	Controller controller = Controller.getInstance();
+	List<GeoPoint> locations = new ArrayList<GeoPoint>();
 	
 	@Override
     public void onCreate(Bundle savedInstanceState)
@@ -43,21 +45,13 @@ public class WarningOnMap extends MapActivity {
         drawable = this.getResources().getDrawable(R.drawable.warning);
         itemizedOverlay = new MapItems(drawable);        
         
-        Bundle bundle = this.getIntent().getExtras();
-    	if (bundle != null) {
-    		lat = bundle.getDoubleArray("lat");
-    		lon = bundle.getDoubleArray("lon");
-    		msg = bundle.getStringArray("msg");
-    		
-    		GeoPoint point;
-    		Log.d(TAG, "recieved "+ lat.length + "elements");
-    		for(int i=0;i<lat.length;i++) {
-    			point = new GeoPoint((int) (lat[i] * 1E6), (int) (lon[i] * 1E6));
-    			overlayitem = new OverlayItem(point, "", msg[i]);
-    			itemizedOverlay.addOverlay(overlayitem);
-    			Log.d(TAG, "added item: " + i);
-    		}   		
-    	}                
+        locations = controller.getLocations();
+        
+        for (GeoPoint location : locations) {
+        	overlayitem = new OverlayItem(location, "", "");
+    		itemizedOverlay.addOverlay(overlayitem);
+        }
+        
         mapOverlays.add(itemizedOverlay);
     }
 	

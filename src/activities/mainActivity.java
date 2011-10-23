@@ -1,5 +1,7 @@
 package activities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import utils.Controller;
@@ -35,21 +37,17 @@ public class mainActivity extends ListActivity implements OnInitListener {
 	public final int TEXT_TO_SPEECH_CHECK_CODE = 1;
 	private final String TAG = "mainActivity";
 	
+	ArrayAdapter<String> adapter;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lv = getListView();
         setContentView(R.layout.rsslist);
-        this.setListAdapter(controller.getRelevantFeedEntries(this));
-        // temporary hardcoded coordinates for testing
-        // controller class will provide this data
-        lat[0] = 53.5667294257814;
-        lat[1] = 52.3391636650016;
-        lon[0] = -2.23450725437083;
-        lon[1] = -0.206259282604262;
-        msg[0] = "warning 1";
-        msg[1] = "warning 2";
+        controller.getRelevantFeedEntries(); // Updates the feed and gets relevant entries, returns controller.relevantTitles 
+        adapter = new ArrayAdapter<String>(this, R.layout.rssrow, controller.relevantTitles);             
+        this.setListAdapter(adapter);
         
         // checks if text to speech is installed on the phone
         Intent checkIntent = new Intent();
@@ -115,14 +113,14 @@ public class mainActivity extends ListActivity implements OnInitListener {
             	
 //                String myText1 = fromTo.getString("start");
 //                String myText2 = fromTo.getString("end");
-                ArrayAdapter<String> templist = controller.getRelevantFeedEntries(this);
-                int num = templist.getCount();
+                List<String> templist = controller.getRelevantFeedEntries();
+                int num = templist.size();
                 if (num > 0) {
-                	String initial = templist.getItem(0);
+                	String initial = templist.get(0);
                 	initial = initial.replace('|', ' ');
                 	textToSpeech.speak(initial, TextToSpeech.QUEUE_FLUSH, null);
                 	for (int i =1; i < num; i++) {
-                    	initial = templist.getItem(i);
+                    	initial = templist.get(i);
                     	initial = initial.replace('|', ' ');
                 		textToSpeech.speak(initial, TextToSpeech.QUEUE_ADD, null);
                 	}
