@@ -18,10 +18,7 @@ import org.json.JSONObject;
 import parser.FeedParser;
 import parser.FeedParserFactory;
 import parser.Message;
-import android.content.Context;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import batmanmustdie.src.R;
 
 import com.google.android.maps.GeoPoint;
 
@@ -97,15 +94,12 @@ public class Controller {
     	}
 		return titles;
     }
-	
-	// checks if roads retrieved from Google navigation occur in any of the
-	// RSS feed entries	
+	// Downloads the new RSS feed through loadFeed(), gets roads that are on the current route
+	// and returns RSS messages that are relevant	
 	public List<String> getRelevantFeedEntries() {
 		relevantMessages = new ArrayList<Message>();
 		allMessages = new ArrayList<Message>();
-//		getRoads("Edinburgh", "London");
 		getRoads(currentRoute[0], currentRoute[1]);
-//		String[] roadNames={"M6","M4","M5","A5"};
 		List<Integer> foundIndexes = new ArrayList<Integer>(); // used to solve the contains problem below
 		relevantTitles = new ArrayList<String>();
 		List<String> allTitles = loadFeed(); // get all feed entries from RSS feed
@@ -179,7 +173,6 @@ public class Controller {
 							Log.d(TAG, "road added " + m.group(0));
 						}						
 					}
-					//Log.d(TAG,jstep.getString("html_instructions"));
 					htmlInstructions.add(jstep.getString("html_instructions"));
 				}
 			}			

@@ -83,26 +83,17 @@ public class ChooseRoute extends Activity{
 				// Go back to mainActivity
     			Intent i = new Intent(view.getContext(), mainActivity.class);
     			startActivity(i);
-    			// not sure why this is needed, Oleg
                 setResult(RESULT_OK, i);
                 finish();
 			}
     		
     	});
-    	
-    	/*Why doesnt this work?
-    	 * 
-    	 */
-    	// test
 
     	ArrayList<String> prevRoutes = dah.getRoutes();
     	Log.d("Accessing DB", ""+prevRoutes.size());
     	if (prevRoutes != null) { 
     		Log.d("ChooseRoute", "Trying to display Previous routes");
-    		ArrayList<String> a1 = new ArrayList<String>();
-//    		for (String r: prevRoutes){
-//    			a1.add(r.getStart()+" - "+r.getEnd());
-//    		}
+//    		ArrayList<String> a1 = new ArrayList<String>();
     		ArrayAdapter<String> a2 = new ArrayAdapter<String>(this, R.layout.testlayout, prevRoutes);
     		viewPrevRoutes.setAdapter(a2);
     	}

@@ -63,7 +63,6 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
             @Override
             public void handleMessage(Message msg) {
             	List<String> oldFeed = controller.relevantTitles;
-//            	List<String> newFeed = controller.getRelevantFeedEntries();
             	// This bit of code is for demo purposes only, when a new feed is found, new entries are being read through text-to-speech
             	if (test < 2) {
             		controller.relevantTitles.add("M6 northbound between J4 and J4A | Northbound | Accident (demo example)"); // for testing purposes
@@ -79,8 +78,7 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
                     	            textToSpeech.speak(newEntry, TextToSpeech.QUEUE_FLUSH, null);
                     			 } else {
                     				 Log.d(TAG, "TTS is not ready yet");
-                    			 }
-                    			
+                    			 }                   			
                     		}
                     	}
                 	} 

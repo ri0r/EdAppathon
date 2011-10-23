@@ -7,7 +7,6 @@ import utils.Controller;
 import utils.MapItems;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.LinearLayout;
 import batmanmustdie.src.R;
 
