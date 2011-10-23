@@ -39,7 +39,9 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 	
 	ArrayAdapter<String> adapter;
 	Handler handler;
-	
+	Boolean speechOn = true;
+	Button speachButton;
+	int test = 0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,26 +58,32 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
             public void handleMessage(Message msg) {
             	List<String> oldFeed = controller.relevantTitles;
 //            	List<String> newFeed = controller.getRelevantFeedEntries();
-            	controller.relevantTitles.add("New example feed"); // for testing purposes
-            	List<String> newFeed = controller.relevantTitles;
-            	for (String newEntry : newFeed) {
-            		if (oldFeed.contains(newEntry)) { // very strange, but it works, should be if it doesn't contain
-            			Log.d(TAG, newEntry);
-            			 if (ttsReady) {
-            	            Log.d(TAG, "speaking");
-            	            textToSpeech.speak(newEntry, TextToSpeech.QUEUE_FLUSH, null);
-            			 } else {
-            				 Log.d(TAG, "TTS is not ready yet");
-            			 }
-            			
-            		}
-            	}
-//            	controller.relevantTitles.add("New example feed"); // for testing purposes
+            	// This bit of code is for demo purposes only, when a new feed is found, new entries are being read through text-to-speech
+            	if (test < 2) {
+            		controller.relevantTitles.add("M6 northbound between J4 and J4A | Northbound | Accident (demo example)"); // for testing purposes
+            		test++;
+                	List<String> newFeed = controller.relevantTitles;
+                	if (speechOn) {
+                		for (String newEntry : newFeed) {
+                    		if (oldFeed.contains(newEntry)) { // very strange, but it works, should be if it doesn't contain
+                    			Log.d(TAG, newEntry);
+                    			 if (ttsReady) {
+                    	            Log.d(TAG, "speaking");
+                    	            newEntry = newEntry.replace('|', ' ');
+                    	            textToSpeech.speak(newEntry, TextToSpeech.QUEUE_FLUSH, null);
+                    			 } else {
+                    				 Log.d(TAG, "TTS is not ready yet");
+                    			 }
+                    			
+                    		}
+                    	}
+                	} 
+            	}           	        	            	
             	adapter = new ArrayAdapter<String>(mainActivity.this, R.layout.rssrow, controller.relevantTitles);
             	mainActivity.this.setListAdapter(adapter);
             }
     	};
-    	 Thread thread = new Thread(this);
+    	 Thread thread = new Thread(this); 
          thread.start();
         
         
@@ -100,10 +108,23 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(v.getContext(), WarningOnMap.class);
-				i.putExtra("lat", lat);
-				i.putExtra("lon", lon);
-				i.putExtra("msg", msg);
 				startActivity(i);				
+			}
+		});
+        
+        speachButton = (Button)this.findViewById(R.id.speechButton);
+        speachButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (speechOn) {
+					speechOn = false;
+					speachButton.setText("Sound off");
+					textToSpeech.stop();
+				} else {
+					speechOn = true;
+					speachButton.setText("Sound on");
+				}			
 			}
 		});
         
@@ -187,14 +208,13 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
         } else {
             // Initialization failed.
             Log.e(TAG, "Could not initialize TextToSpeech.");
-        }
-		
+        }		
 	}
 	@Override
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(15000);
 			} catch(Exception e) {
 				Log.e(TAG, e.toString());
 			}
