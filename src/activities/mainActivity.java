@@ -26,7 +26,7 @@ public class mainActivity extends ListActivity implements OnInitListener {
 	private TextToSpeech textToSpeech;
 	private Boolean ttsReady = false;
 	private TextView start;
-	private TextView end;
+	private TextView end;  
 	ListView lv;
 	Controller controller = Controller.getInstance();
 	
@@ -111,8 +111,8 @@ public class mainActivity extends ListActivity implements OnInitListener {
         	// read out updates
             if (ttsReady) {
             	Log.d(TAG, "speaking");
-                String myText1 = "Did you sleep well?";
-                String myText2 = "I hope so, because it's time to wake up.";
+                String myText1 = fromTo.getString("start");
+                String myText2 = fromTo.getString("end");
             	textToSpeech.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
             	textToSpeech.speak(myText2, TextToSpeech.QUEUE_ADD, null);
             } 

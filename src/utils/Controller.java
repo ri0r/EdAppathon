@@ -69,7 +69,8 @@ public class Controller {
 	// checks if roads retrieved from Google navigation occur in any of the
 	// RSS feed entries	
 	public ArrayAdapter<String> getRelevantFeedEntries(Context c) {
-		getRoads("Edinburgh", "London");
+		//getRoads("Birmingham", "London");
+		String[] roadNames={"M6","M4","M5","A5"};
 		List<Integer> foundIndexes = new ArrayList<Integer>(); // used to solve the contains problem below
 		List<String> relevantTitles = new ArrayList<String>();
 		List<String> allTitles = loadFeed(c); // get all feed entries from RSS feed
@@ -85,6 +86,7 @@ public class Controller {
 				}
 			}
 		}
+		
 		Log.d(TAG, "relevant messages: "+relevantMessages.size());
 		ArrayAdapter<String> adapter = 
 	    		new ArrayAdapter<String>(c, R.layout.rssrow, relevantTitles);
@@ -101,7 +103,7 @@ public class Controller {
 		sb.append("&sensor=false");
 		sb.append("&alternatives=true&region=uk");
 		String s = sb.toString();
-		
+		Log.d(TAG, s);
 		Pattern road = Pattern.compile("[ABJM][0-9]+");
 		
 		JSONObject json = new JSONObject();
