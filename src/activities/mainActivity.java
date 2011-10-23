@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Locale;
 
 import utils.Controller;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -130,6 +132,23 @@ public class mainActivity extends ListActivity implements OnInitListener, Runnab
 					speechOn = true;
 					speachButton.setText("Sound off");
 				}			
+			}
+		});
+        Button reportIncidentButton = (Button)findViewById(R.id.reportIncidentButton);
+        reportIncidentButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity.this);
+				builder.setMessage("Feature in development.")
+				       .setCancelable(false)
+				       .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				                dialog.cancel();
+				           }
+				       });
+				AlertDialog alert = builder.create();
+				alert.show();
 			}
 		});
         
